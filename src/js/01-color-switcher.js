@@ -5,18 +5,21 @@ let timerId = null;
 
 startBtn.addEventListener('click', onStartBtnClick);
 stopBtn.addEventListener('click', onStopBtnClick);
+stopBtn.disabled = true;
 
 function onStartBtnClick(event) {
     event.preventDefault();
     timerId = setInterval(() => {
     document.body.style.backgroundColor = getRandomHexColor();
     }, 1000);
-    startBtn.disabled = true;
+  startBtn.disabled = true;
+  stopBtn.disabled = false;
 }
 
 function onStopBtnClick() {
     clearInterval(timerId);
-    startBtn.disabled = false;
+  startBtn.disabled = false;
+  stopBtn.disabled = true;
 }
 
 function getRandomHexColor() {

@@ -20,11 +20,14 @@ const options = {
     if (settledTime <= currentTime) {
       Notiflix.Notify.failure('Please choose a date in the future');
       startBtn.disabled = true;
+      
     } else {
+
       startBtn.disabled = false;
     }
   },
 };
+
 
 const timer = {
   intervalID: null,
@@ -42,20 +45,17 @@ const timer = {
       currentTime = Date.now();
       const deltaTime = settledTime - currentTime;
       const { days, hours, minutes, seconds } = convertMs(deltaTime);
-      this.refs.daysRef.textContent = days;
-      this.refs.hoursRef.textContent = hours;
-      this.refs.minutesRef.textContent = minutes;
-      this.refs.secondsRef.textContent = seconds;
+      this.refs.daysRef.textContent = addLeadingZero(days);
+      this.refs.hoursRef.textContent = addLeadingZero(hours);
+      this.refs.minutesRef.textContent = addLeadingZero(minutes);
+      this.refs.secondsRef.textContent = addLeadingZero(seconds);
     if (seconds <= 0) {
     clearInterval(intervalId);
     }
 
-
     }, 1000);
   },
 };
-
-
 
 
 flatpickr(inputRef, options);
@@ -65,6 +65,10 @@ startBtn.addEventListener('click', onClick);
 function onClick(event) {
   console.log(settledTime);
   timer.start();
+}
+
+function addLeadingZero(value) {
+  return String(value).padStart(2, '0')
 }
 
 function convertMs(ms) {
