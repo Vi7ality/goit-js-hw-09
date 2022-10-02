@@ -28,9 +28,9 @@ const options = {
   },
 };
 
+let timerId = null;
 
 const timer = {
-  intervalID: null,
   refs: {
     daysRef: document.querySelector('[data-days]'),
     hoursRef: document.querySelector('[data-hours]'),
@@ -39,18 +39,22 @@ const timer = {
   },
 
   start() {
-    console.log('Timer is started');
+    Notiflix.Notify.info('Timer is started');
 
-  intervalId = setInterval(() => {
+  timerId = setInterval(() => {
       currentTime = Date.now();
       const deltaTime = settledTime - currentTime;
       const { days, hours, minutes, seconds } = convertMs(deltaTime);
+
+    if (seconds >= 0) {
       this.refs.daysRef.textContent = addLeadingZero(days);
       this.refs.hoursRef.textContent = addLeadingZero(hours);
       this.refs.minutesRef.textContent = addLeadingZero(minutes);
       this.refs.secondsRef.textContent = addLeadingZero(seconds);
-    if (seconds <= 0) {
-    clearInterval(intervalId);
+
+    } else {
+      Notiflix.Notify.info('Timer is stopped')
+      clearInterval(timerId);
     }
 
     }, 1000);
